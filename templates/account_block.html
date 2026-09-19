@@ -3,6 +3,7 @@
 {% if session.username %}
   <h1>{{ session.username }}</h1>
     <a class="link-button" href="/log_out">Log out</a>
+    <a class="link-button" href="/delete_user">Delete account</a>
 {% elif session.sign_in %}
   <form action="/register" method="post">
 
@@ -27,6 +28,7 @@
 {% else %}
 <form action="/log_in" method="post">
   {% if session.empty_username %} <p class="error">Empty username</p> {% endif %}
+  {% if session.incorrect_username %} <p class="error">Incorrect username</p> {% endif %}
   <label for="username" class="input-prompt">Username:</label>
   {% if session.log_in_attempt %}
     <input class="text-input" type="text" value={{ session.log_in_attempt }} id="username" name="username" />
@@ -34,6 +36,7 @@
     <input class="text-input" type="text" id="username" name="username" />
   {% endif %}
   {% if session.empty_password %} <p class="error">Empty password</p> {% endif %}
+  {% if session.incorrect_password %} <p class="error">Incorrect password</p> {% endif %}
   <label for="password" class="input-prompt">Password:</label>
   <input class="text-input" type="password" name="password" />
   <input class="form-button" type="submit" value="Log in" /></br>

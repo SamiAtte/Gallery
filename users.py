@@ -37,7 +37,7 @@ def log_in():
   sql = "SELECT id, password_hash FROM Users WHERE username = ?"
   query = db.query(sql, [username])
   if not query:
-    session["log_in_error"] = True
+    session["incorrect_username"] = True
     return redirection()
   query = query[0]
   password_hash = query[1]
@@ -45,14 +45,20 @@ def log_in():
   if check_password_hash(password_hash, password):
     session["username"] = username
     session["user_id"] = query[0]
-    if "log_in_error" in session:
-      del session["log_in_error"] 
-    if "log_in_attempt" in session:
-      del session["log_in_attempt"] 
+    clear_login_attempt()
     return redirection()
   else:
-    session["log_in_error"] = True
+    session["incorrect_password"] = True
     return redirection()
+
+def clear_login_attempt():
+  if "log_in_attempt" in session:
+    del session["log_in_attempt"] 
+  if "incorrect_username" in session:
+    del session["incorrect_username"] 
+  if "incorrect_password" in session:
+    del session["incorrect_password"] 
+
 
 @app.route("/log_out")
 def log_out():
@@ -62,12 +68,18 @@ def log_out():
 
 @app.route("/sign_in")
 def sign_in():
+  clear_login_attempt()
   session["sign_in"] = True
   return redirection()
 
 @app.route("/cancel_sign_in")
 def cancel_sign_in():
-  del session["sign_in"] 
+  clear_sign_in_attempt()
+  return redirection()
+
+def clear_sign_in_attempt():
+  if "sign_in" in session:
+    del session["sign_in"] 
   if "sign_in_attempt" in session:
     del session["sign_in_attempt"]
   if "no_match" in session:
@@ -78,7 +90,6 @@ def cancel_sign_in():
     del session["empty_username"]
   if "empty_password" in session:
     del session["empty_password"]
-  return redirection()
 
 
 
@@ -115,14 +126,14 @@ def register():
     print("Error while trying to sign in")
     return redirection()
   
-  if "no_match" in session:
-    del session["no_match"];
-  if "name_not_available" in session:
-    del session["name_not_available"];
-  if "sign_in_attempt" in session:
-    del session["sign_in_attempt"];
-  del session["sign_in"] 
-
+  clear_sign_in_attempt()
   return redirection()
 
-
+@app.route("/delete_user")
+def delete_user():
+  sql = "DELETE FROM Users WHERE username = ?"
+  # TODO Poista myös käyttäjän julkaisut, kommentit yms. 
+  db.execute(sql, [session["username"]])
+  del session["username"]
+  del session["user_id"]
+  return redirection()
