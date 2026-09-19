@@ -1,4 +1,4 @@
-# Galleria
+# Gallery
 
 
 * Käyttäjän tekemä julkaisu koostuu yhdestä tai useammasta kuvasta, mahdollisesta 
