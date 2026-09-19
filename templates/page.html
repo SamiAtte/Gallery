@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Galleria</title>
+</head>
+<body>
+  <link rel="stylesheet" href="/static/style.css">
+  <main/>
+    <div class="main-grid">
+      <div class="main">
+        {% if front_page %}
+        {% include 'front_page.html' %}
+        {% endif %}
+      </div>
+      <div class="account-block">
+        {% include 'account_block.html' %}
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+
+
+{% macro image_preview_info(date,views,other) %}  
+  <div class="image-preview-info">
+    <p> {{ date }} </p>
+    <p> {{ views }} </p>
+    <p> {{ other }}</p>
+  </div>
+{% endmacro %}
+
+{% macro image_preview(name,image,poster) %}  
+  <div class="image-preview-block">
+    <h2 class="image-preview-name"> {{ name }} </h2>
+    <img class="preview-image" src="{{ image }}" />
+    <h4 class="image-preview-poster"> {{ poster }} </h4>
+    {{ image_preview_info("dd:mm:yyyy", "millions", "something") }}
+  </div>
+{% endmacro %}
+ 

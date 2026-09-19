@@ -1,0 +1,16 @@
+
+        
+{% if not logged_in %}
+<form action="/result" method="post">
+  <label for="username" class="input-prompt">Username:</label>
+  <input class="text-input" type="text" id="username" name="username" />
+  <label for="password" class="input-prompt">Password:</label>
+  <input class="text-input" type="password" name="password" />
+  <input class="form-button" type="submit" value="Log in" />
+</form>
+{% endif %}
+
+
+
+
+

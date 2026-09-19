@@ -1,0 +1,24 @@
+
+{% from "image_preview.html" import image_preview %}
+<h1>Gallery</h1>
+
+<form action="/front_page" method="get">
+  <label for="sorting">Sorting:</label>
+  <input list="sorting-options" name="sorting" id="sorting">
+  <datalist id="sorting-options">
+    <option value="Newest">
+    <option value="Oldest">
+    <option value="Most viewed">
+    <option value="Least viewed">
+  </datalist>
+  <input type="submit">
+</form>
+<div class="image-grid">
+   {{ image_preview("Kuva a", "/static/testit/a.jpg", "Harri") }} 
+   {{ image_preview("Kuva b", "/static/testit/b.jpg", "Harri") }} 
+   {{ image_preview("Kuva c", "/static/testit/c.jpg", "Matti") }} 
+   {{ image_preview("Kuva d", "/static/testit/d.jpg", "Harri") }} 
+   {{ image_preview("Kuva e", "/static/testit/e.jpg", "Liisa") }} 
+   {{ image_preview("Kuva f", "/static/testit/f.jpg", "Mika") }} 
+</div>
+
