@@ -96,11 +96,26 @@ html {
 
 .image-grid {
   display: grid;
+  align-content: center;
   grid-template-columns: auto auto auto;
   background-color: var(--block-color);
-  padding: 10px;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
+.image-link-button {
+  color: var(--text-color1);
+  display: block;
+  text-decoration: none;
+  border-radius: var(--border-rounding);
+  padding: 3px;
+  margin: 3px;
+}
+
+a.image-link-button:hover {
+  background-color: var(--hover-color);
+}
 
 .image-preview-block {
   background-color: var(--element-color);
