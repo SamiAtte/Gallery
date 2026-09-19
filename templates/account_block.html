@@ -5,33 +5,35 @@
     <a class="link-button" href="/log_out">Log out</a>
 {% elif session.sign_in %}
   <form action="/register" method="post">
-  {% if session.no_match %}
-      <label for="username" class="input-prompt">Username:</label>
-      {% if session.sign_in_attempt %}
-        <input class="text-input" type="text" value={{ session.sign_in_attempt }} id="username" name="username" />
-      {% else %}
-        <input class="text-input" type="text" id="username" name="username" />
-      {% endif %}
-      <p class="error">Passwords do not match</p>
-  {% elif session.name_not_available %}
-      <p class="error">Username not available</p>
-      <label for="username" class="input-prompt">Username:</label>
-      <input class="text-input" type="text" id="username" name="username" />
-  {% else %}
-      <label for="username" class="input-prompt">Username:</label>
-      <input class="text-input" type="text" id="username" name="username" />
-  {% endif %}
-      <label for="password1" class="input-prompt">Password:</label>
-      <input class="text-input" type="password" name="password1" />
-      <label for="password2" class="input-prompt">Repeat password:</label>
-      <input class="text-input" type="password" name="password2" />
-      <input class="form-button" type="submit" value="Sign in" />
-      <a class="link-button" href="/cancel_sign_in">Cancel</a>
-  </form>
-{% elif not logged_in %}
-<form action="/log_in" method="post">
+
+  {% if session.empty_username %} <p class="error">Empty username</p> {% endif %}
+  {% if session.name_not_available %} <p class="error">Username not available</p> {% endif %}
   <label for="username" class="input-prompt">Username:</label>
-  <input class="text-input" type="text" id="username" name="username" />
+  {% if session.sign_in_attempt %}
+    <input class="text-input" type="text" value={{ session.sign_in_attempt }} id="username" name="username" />
+  {% else %}
+    <input class="text-input" type="text" id="username" name="username" />
+  {% endif %}
+
+  {% if session.no_match %} <p class="error">Passwords do not match</p> {% endif %}
+  {% if session.empty_password %} <p class="error">Empty password</p> {% endif %}
+  <label for="password" class="input-prompt">Password:</label>
+  <input class="text-input" type="password" name="password" />
+  <label for="password2" class="input-prompt">Repeat password:</label>
+  <input class="text-input" type="password" name="password2" />
+  <input class="form-button" type="submit" value="Sign in" />
+  <a class="link-button" href="/cancel_sign_in">Cancel</a>
+  </form>
+{% else %}
+<form action="/log_in" method="post">
+  {% if session.empty_username %} <p class="error">Empty username</p> {% endif %}
+  <label for="username" class="input-prompt">Username:</label>
+  {% if session.log_in_attempt %}
+    <input class="text-input" type="text" value={{ session.log_in_attempt }} id="username" name="username" />
+  {% else %}
+    <input class="text-input" type="text" id="username" name="username" />
+  {% endif %}
+  {% if session.empty_password %} <p class="error">Empty password</p> {% endif %}
   <label for="password" class="input-prompt">Password:</label>
   <input class="text-input" type="password" name="password" />
   <input class="form-button" type="submit" value="Log in" /></br>

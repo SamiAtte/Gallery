@@ -6,10 +6,33 @@ from utils import redirection
 
 from init import app
 
+def get_username():
+  username = request.form["username"]
+  if not username:
+    session["empty_username"] = True
+    if "sign_in_attempt" in session:
+      del session["sign_in_attempt"]
+  elif "empty_username" in session:
+    del session["empty_username"]
+  return username
+
+def get_password():
+  password = request.form["password"]
+  if not password:
+    session["empty_password"] = True
+  elif "empty_password" in session:
+    del session["empty_password"]
+  return password
+
+
 @app.route("/log_in", methods=["POST"])
 def log_in():
-  username = request.form["username"]
-  password = request.form["password"]
+  username = get_username()
+  if not username: return redirection()
+  session["log_in_attempt"] = username
+
+  password = get_password()
+  if not password: return redirection()
 
   sql = "SELECT id, password_hash FROM Users WHERE username = ?"
   query = db.query(sql, [username])
@@ -24,10 +47,12 @@ def log_in():
     session["user_id"] = query[0]
     if "log_in_error" in session:
       del session["log_in_error"] 
+    if "log_in_attempt" in session:
+      del session["log_in_attempt"] 
     return redirection()
   else:
     session["log_in_error"] = True
-    return redirection(session)
+    return redirection()
 
 @app.route("/log_out")
 def log_out():
@@ -49,17 +74,25 @@ def cancel_sign_in():
     del session["no_match"]
   if "name_not_available" in session:
     del session["name_not_available"]
+  if "empty_username" in session:
+    del session["empty_username"]
+  if "empty_password" in session:
+    del session["empty_password"]
   return redirection()
 
 
 
 @app.route("/register", methods=["POST"])
 def register():
-  username  = request.form["username"]
-  password1 = request.form["password1"]
+  username = get_username()
+  if not username: return redirection()
+
+  password = get_password()
+  if not password: return redirection()
+
   password2 = request.form["password2"]
   
-  if password1 != password2:
+  if password != password2:
     session["sign_in_attempt"] = username
     session["no_match"] = True
     return redirection()
@@ -74,7 +107,7 @@ def register():
     session["name_not_available"] = True
     return redirection()
 
-  password_hash = generate_password_hash(password1)
+  password_hash = generate_password_hash(password)
   try:
     sql = "INSERT INTO Users (username, password_hash) VALUES (?, ?)"
     db.execute(sql, [username, password_hash])
