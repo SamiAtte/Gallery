@@ -120,17 +120,8 @@ a.image-link-button:hover {
 .image-preview-block {
   background-color: var(--element-color);
   width: var(--preview-width);
-  /*
-  height: var(--preview-height);
-  min-height: 100%;
-  */
   padding: 3px;
   margin: 3px;
-  /*
-  position: absolute;
-  display: block;
-  overflow: hidden;
-  */
 }
 
 .image-preview-name {
@@ -205,4 +196,11 @@ input.form-button {
 input.form-button:hover {
   background-color: var(--hover-color);
 }
+
+.error {
+  color: #f22;
+  font-size: 12px;
+  margin: 0px;
+}
+
 

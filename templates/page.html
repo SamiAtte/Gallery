@@ -8,8 +8,10 @@
   <main/>
     <div class="main-grid">
       <div class="main">
-        {% if front_page %}
+        {% if session.page == "/front_page" %}
         {% include 'front_page.html' %}
+        {% else %}
+        <p>error</p>
         {% endif %}
       </div>
       <div class="account-block">
