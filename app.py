@@ -74,7 +74,7 @@ def create_post():
 
   file = request.files["image"]
   if not (file.filename.endswith(".jpg") or file.filename.endswith(".png")):
-    return "VIRHE: väärä tiedostomuoto"
+    return "Error: wrong filetype"
 
   image = file.read()
 
