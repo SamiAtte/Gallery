@@ -7,6 +7,8 @@ from utils import *
 import users
 import datetime
 
+import exifread
+
 from init import app
 
 
@@ -24,22 +26,22 @@ def front_page():
   session["page"] = "/front_page"
 
   sql = '''
-      SELECT B.username, A.id, A.title, A.post_date
+      SELECT B.username, A.id, A.title, A.post_date, image_width, image_height
       FROM Posts A
       LEFT JOIN Users B ON B.id = A.poster
       ORDER BY A.post_date ASC;
     '''
   query = db.query(sql, [])
-  posts = multi_list(query, list(range(0,4)))
+  posts = multi_list(query, list(range(0,6)))
   return render_template("page.html", posts=posts)
 
 
 @app.route("/image/<int:post_id>")
 def get_image(post_id):
-  sql = "SELECT image_data FROM Posts WHERE id = ?"
-  image = db.query(sql, [post_id])[0][0]
-  response = make_response(bytes(image))
-  response.headers.set("Content-Type", "image/jpeg")
+  sql = "SELECT image_data, image_format FROM Posts WHERE id = ?"
+  image = db.query(sql, [post_id])[0]
+  response = make_response(bytes(image[0]))
+  response.headers.set("Content-Type", f"image/{image[1]}")
   return response
 
 @app.route("/post/<int:post_id>")
@@ -73,16 +75,29 @@ def create_post():
   tag_list = [item.strip() for item in tags.split(',')]
 
   file = request.files["image"]
-  if not (file.filename.endswith(".jpg") or file.filename.endswith(".png")):
-    return "Error: wrong filetype"
+  file_type = ""
+  if file.filename.endswith(".jpg"):
+    file_type = "jpg"  
+  elif file.filename.endswith(".png"):
+    file_type = "png"  
+  else: 
+    return "Error: Unsupported file type"
 
   image = file.read()
+
+  exif_tags = exifread.process_file(file, builtin_types=True)
+  for tag, value in exif_tags.items():
+    print(f"{tag}: {value}")
+
+  image_width = exif_tags["EXIF ExifImageWidth"]
+  image_height = exif_tags["EXIF ExifImageLength"]
 
   user_id = session["user_id"]
   post_date = datetime.datetime.now()
 
-  sql = "INSERT INTO Posts (title, poster, post_date, image_data) VALUES (?, ?, ?, ?)"
-  db.execute(sql, [title, user_id, post_date, image])
+  sql = '''INSERT INTO Posts (title, poster, post_date, image_data, image_format, image_width, image_height) 
+    VALUES (?, ?, ?, ?, ?, ?, ?)'''
+  db.execute(sql, [title, user_id, post_date, image, file_type, image_width, image_height])
 
   return go_back()
 

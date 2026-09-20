@@ -11,7 +11,10 @@ CREATE TABLE Posts (
     title TEXT,
     poster INTEGER,
     post_date DATETIME,
-    image_data BLOB
+    image_data BLOB,
+    image_format TEXT,
+    image_width INTEGER, 
+    image_height INTEGER
 );
 
 CREATE TABLE Tags (
