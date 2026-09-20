@@ -19,3 +19,14 @@ Kuvan julkaisuun sisältyy kuvan itsensä lisäksi:
 Kuka tahansa käyttäjä voi selailla kuvia vapaasti ja hakea kuvia avaisanojen, 
 julkaisijoiden ja kokoelmien avulla. Vain rekisteröityneet käyttäjät voi 
 kommentoida julkaisuja.
+
+## Kokeilu/testaus:
+
+```console 
+python3 -m venv venv
+source venv/bin/activation
+pip install flask
+pip install exifread
+flask run
+```
+
