@@ -1,31 +1,21 @@
 # Gallery
 
+Yksinkertainen galleria kuvien julkaisemiseen/jakamiseen.
 
-* Käyttäjän tekemä julkaisu koostuu yhdestä tai useammasta kuvasta, mahdollisesta 
-  tiivistetekstistä sekä ainakin yhdestä julkaisun aiheeseen liittyvästä avainsanasta.
+Kuka tahansa rekisteröitynyt käyttäjä voi kuvien julkaisemisen lisäksi myös 
+luoda tililleen kuvakokoelmia, ja lisätä, sekä poistaa, niihin vapaasti omia 
+tai muiden julkaisemia kuvia. Jokaisella kuvakokoelmalla tulee olla nimi ja 
+ainakin yksi avainsana, joka kuvaa sen sisältöä. Mikäli kuvan alkuperäinen 
+julkaisija poistaa kyseisen, se poistuu myös kaikista niistä kokoelmista, 
+missä se on.
 
+Kuvan julkaisuun sisältyy kuvan itsensä lisäksi:
+  * Nimi.
+  * Julkaisu päivämäärä.
+  * Julkaisijan nimi.
+  * Joukko avainsanoja.
+  * Kommenttiosio.
 
-* Käyttäjät voivat katsella toisten käyttäjien viestejä, tallentaa niitä kokoelmiinsa ja lisätä niihin
-  omia avainsanoja.
-
-* Hakutoiminnot:
-  * Käyttäjät voivat valita keiden asettamia avainsanoja haussa käytetään.
-
-* Käyttäjät voivat asettaa toisia käyttäjiä ja avainsanoja mustalle listalle.
-
-* Kokoelmat:
-  * Käyttäjät voivat luoda kokoelmia joihin he voivat tallentaa toisten käyttäjien julkaisuja.
-    Kokoelmat myös sisältävät avainsanoja.
-
-
-* Ryhmät:
-  * Käyttäjät voivat luoda ryhmiä, joihin sisältyy muita käyttäjiä. 
-  * Julkaisu voidaan asettaa näkyväksi vain tietylle ryhmälle.
-
-
-* Julkaisu
-* Ryhmä
-* Julkaisukokoelma
-* Käyttäjäkokoelma
-* Avainsana
-* Käyttäjä
+Kuka tahansa käyttäjä voi selailla kuvia vapaasti ja hakea kuvia avaisanojen, 
+julkaisijoiden ja kokoelmien avulla. Vain rekisteröityneet käyttäjät voi 
+kommentoida julkaisuja.
