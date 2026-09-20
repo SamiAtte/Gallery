@@ -116,9 +116,12 @@ def register():
 
 @app.route("/delete_user")
 def delete_user():
-  sql = "DELETE FROM Users WHERE username = ?"
-  # TODO Poista myös käyttäjän julkaisut, kommentit yms. 
-  db.execute(sql, [session["username"]])
+  delete_user_sql = "DELETE FROM Users WHERE username = ?"
+  db.execute(delete_user_sql, [session["username"]])
+  delete_posts_sql = "DELETE FROM Posts WHERE poster = ?"
+  db.execute(delete_posts_sql, [session["user_id"]])
+  delete_comments_sql = "DELETE FROM Comments WHERE commenter_id = ?"
+  db.execute(delete_comments_sql, [session["user_id"]])
   del session["username"]
   del session["user_id"]
   return redirection()

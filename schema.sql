@@ -30,6 +30,7 @@ CREATE TABLE TagMap (
 CREATE TABLE Comments (
     id INTEGER PRIMARY KEY,
     post_id INTEGER,
+    commenter_id INTEGER,
     comment_date DATETIME,
     comment_data TEXT
 );
