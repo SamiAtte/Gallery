@@ -47,14 +47,22 @@ def get_image(post_id):
 @app.route("/post/<int:post_id>")
 def post_page(post_id):
   session["page"] = "/post/" + str(post_id)
-  sql = '''
+  post_sql = '''
       SELECT B.username, A.id, A.title, A.post_date
       FROM Posts A
       LEFT JOIN Users B ON B.id = A.poster
       WHERE A.id = ?
     '''
-  post = db.query(sql, [post_id])[0]
-  return render_template("page.html", post = post)
+  post = db.query(post_sql, [post_id])[0]
+  tags_sql = '''
+      SELECT A.tag_name 
+      FROM Tags A 
+      INNER JOIN TagMap B ON B.tag_id = A.id
+      WHERE B.image_id = ?
+      ORDER BY A.tag_name
+    '''
+  tags = db.query(tags_sql, [post_id])
+  return render_template("page.html", post = post, tags = tags)
 
 @app.route("/new_post")
 def new_post():
@@ -63,6 +71,24 @@ def new_post():
   session["previous_page"] = session["page"]  
   session["page"] = "/new_post"
   return render_template("page.html")
+
+def add_new_tag(tag: str): 
+  sql = "SELECT id FROM Tags WHERE tag_name = ?"
+  query = db.query(sql, [tag])
+  if not query:
+    sql = "INSERT INTO Tags (tag_name) VALUES (?)"
+    db.execute(sql, [tag])
+    print("new tag added:", tag, db.last_insert_id())
+    return db.last_insert_id()
+  return query[0][0]
+
+def link_tags(post_id, tag_ids): 
+  sql = "INSERT INTO TagMap (tag_id, image_id) VALUES (?,?)"
+  for tag in tag_ids: 
+    print("linking", post_id, tag)
+    db.execute(sql, [tag,post_id])
+
+
 
 @app.route("/create_post", methods = ["POST"])
 def create_post():
@@ -73,6 +99,7 @@ def create_post():
   if not tags: return redirection()
  
   tag_list = [item.strip() for item in tags.split(',')]
+  tag_list = list(map(add_new_tag, tag_list))
 
   file = request.files["image"]
   file_type = ""
@@ -93,11 +120,13 @@ def create_post():
   image_height = exif_tags["EXIF ExifImageLength"]
 
   user_id = session["user_id"]
-  post_date = datetime.datetime.now()
+  post_date = str(datetime.datetime.now()).split(' ')[0]
 
   sql = '''INSERT INTO Posts (title, poster, post_date, image_data, image_format, image_width, image_height) 
     VALUES (?, ?, ?, ?, ?, ?, ?)'''
   db.execute(sql, [title, user_id, post_date, image, file_type, image_width, image_height])
+
+  link_tags(db.last_insert_id(), tag_list)
 
   return go_back()
 

@@ -8,6 +8,13 @@
   </li>
   <li>
     <h4 class="image-preview-poster"> {{ post[0] }} </h4>
+    {{ post[3] }}
+    <p align="left">
+    {% for tag in tags %}
+      {{tag[0]}},
+    {% endfor %} 
+    </p>
+
     {% if session.username == post[0] %}
       <form action="/delete_post" method="post"> 
         <input type="hidden" name="post_id" value="{{ post[1] }}">

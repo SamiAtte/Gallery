@@ -6,6 +6,7 @@
       <li><a class="link-button" href="/new_post">New post</a></li>
       <li><a class="link-button" href="/log_out">Log out</a></li>
       <li><a class="link-button" href="/delete_user">Delete account</a></li>
+      <li><a class="link-button" href="/front_page">front page</a></li>
     </ul></div>
 {% elif session.sign_in %}
   <form action="/register" method="post">
@@ -36,6 +37,7 @@
     <li>
       <a class="link-button" href="/cancel_sign_in">Cancel</a>
     </li>
+      <li><a class="link-button" href="/front_page">front page</a></li>
     </ul></div>
   </form>
 {% else %}
@@ -64,6 +66,7 @@
   <li>
     <a class="link-button" href="/sign_in">Sign in</a>
   </li>
+  <li><a class="link-button" href="/front_page">front page</a></li>
 </ul></div>
 {% endif %}
 

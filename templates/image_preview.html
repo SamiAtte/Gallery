@@ -8,7 +8,7 @@
   </div>
 {% endmacro %}
 
-{% macro image_preview(name,poster,image_id) %}  
+{% macro image_preview(name,poster,image_id, post_date) %}  
   <div class="image-preview-block">
     <a href="/post/{{ image_id }}" class="image-link-button">
     <h2 class="image-preview-name"> {{ name }} </h2>
@@ -17,7 +17,7 @@
     <a href="/" class="image-link-button">
     <h4 class="image-preview-poster"> {{ poster }} </h4>
     </a>
-    {{ image_preview_info("dd:mm:yyyy", "millions", "something") }}
+    {{ image_preview_info(post_date, "--", "--") }}
   </div>
 {% endmacro %}
  
