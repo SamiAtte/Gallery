@@ -22,11 +22,20 @@ kommentoida julkaisuja.
 
 ## Kokeilu/testaus:
 
+
 ```console 
 python3 -m venv venv
+```
+```console 
 source venv/bin/activation
+```
+```console 
 pip install flask
+```
+```console 
 pip install exifread
+```
+```console 
 flask run
 ```
 
