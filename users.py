@@ -2,36 +2,39 @@ from flask import Flask, request, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 import db 
-from utils import redirection
+from utils import * #redirection
 
 from init import app
 
-def get_username():
-  username = request.form["username"]
-  if not username:
-    session["empty_username"] = True
-    if "sign_in_attempt" in session:
-      del session["sign_in_attempt"]
-  elif "empty_username" in session:
-    del session["empty_username"]
-  return username
+#def get_username():
+# username = request.form["username"]
+# if not username:
+#   session["empty_username"] = True
+#   if "sign_in_attempt" in session:
+#     del session["sign_in_attempt"]
+# elif "empty_username" in session:
+#   del session["empty_username"]
+# return username
 
-def get_password():
-  password = request.form["password"]
-  if not password:
-    session["empty_password"] = True
-  elif "empty_password" in session:
-    del session["empty_password"]
-  return password
+#def get_password():
+# password = request.form["password"]
+# if not password:
+#   session["empty_password"] = True
+# elif "empty_password" in session:
+#   del session["empty_password"]
+# return password
 
 
 @app.route("/log_in", methods=["POST"])
 def log_in():
-  username = get_username()
-  if not username: return redirection()
+  username = get_non_empty("username", "empty_username")
+  if not username: 
+    if "log_in_attempt" in session:
+      del session["log_in_attempt"]
+    return redirection()
   session["log_in_attempt"] = username
 
-  password = get_password()
+  password = get_non_empty("password", "empty_password")
   if not password: return redirection()
 
   sql = "SELECT id, password_hash FROM Users WHERE username = ?"
@@ -95,10 +98,10 @@ def clear_sign_in_attempt():
 
 @app.route("/register", methods=["POST"])
 def register():
-  username = get_username()
+  username = get_non_empty("username", "empty_username")
   if not username: return redirection()
 
-  password = get_password()
+  password = get_non_empty("password", "empty_password")
   if not password: return redirection()
 
   password2 = request.form["password2"]

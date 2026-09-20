@@ -23,6 +23,11 @@
   --bg-color: #777;
 
   --account-block-padding: 10px;
+
+  --vertical-button-gap: 3px;
+
+  --button-list-margin: 3px;
+  --button-list-padding: 3px;
 }
 
 h1 {
@@ -32,6 +37,27 @@ h1 {
 html {
   background-color: var(--bg-color);
 }
+
+.vertical-button-list ul {
+  margin: var(--button-list-margin);
+  padding: var(--button-list-padding);
+  list-style: none;
+  background-color: var(--bg-color);
+}
+
+.vertical-button-list li {
+  margin: var(--vertical-button-gap) 0px var(--vertical-button-gap) 0px;
+}
+
+.vertical-button-list li.top {
+  margin: 0px 0px var(--vertical-button-gap) 0px;
+}
+
+.vertical-button-list li.bottom {
+  margin: var(--vertical-button-gap) 0px 0px 0px;
+}
+
+
 
 .sorting-buttons {
   display: grid;

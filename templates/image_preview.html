@@ -8,11 +8,11 @@
   </div>
 {% endmacro %}
 
-{% macro image_preview(name,image,poster) %}  
+{% macro image_preview(name,poster,image_id) %}  
   <div class="image-preview-block">
     <a href="/" class="image-link-button">
     <h2 class="image-preview-name"> {{ name }} </h2>
-    <img class="preview-image" src="{{ image }}" />
+    <img class="preview-image" src="image/{{ image_id }}" />
     </a>
     <a href="/" class="image-link-button">
     <h4 class="image-preview-poster"> {{ poster }} </h4>

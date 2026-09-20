@@ -8,6 +8,7 @@ CREATE TABLE Users (
 
 CREATE TABLE Posts (
     id INTEGER PRIMARY KEY,
+    title TEXT,
     poster INTEGER,
     post_date DATETIME,
     image_data BLOB

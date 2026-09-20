@@ -10,6 +10,8 @@
       <div class="main">
         {% if session.page == "/front_page" %}
         {% include 'front_page.html' %}
+        {% elif session.page == "/new_post" %}
+        {% include 'new_post.html' %}
         {% else %}
         <p>error</p>
         {% endif %}

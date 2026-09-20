@@ -1,0 +1,22 @@
+<form action="/create_post" method="post" enctype="multipart/form-data">
+<h2>Create new post.</h2>
+  <div class="vertical-button-list"><ul>
+    <li>
+      <label for="title" class="input-prompt">Title</label>
+      <input class="text-input" type="text" name="title"/>
+    </li>
+    <li>
+      <input type="file" name="image" accept="image/*"/>
+    </li>
+    <li>
+      <label for="tag_list" class="input-prompt">Add comma-separated list of tags. Atleast 1.</label>
+      <input class="text-input" type="text" name="tag_list"/>
+    </li>
+    <li>
+      <input class="form-button" type="submit" value="post"/>
+    </li>
+    <li>
+      <a class="link-button" href="/cancel_post">Cancel</a>
+    </li>
+  </ul></div>
+</form>
