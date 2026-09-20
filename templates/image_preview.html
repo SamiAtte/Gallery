@@ -10,7 +10,7 @@
 
 {% macro image_preview(name,poster,image_id) %}  
   <div class="image-preview-block">
-    <a href="/" class="image-link-button">
+    <a href="/post/{{ image_id }}" class="image-link-button">
     <h2 class="image-preview-name"> {{ name }} </h2>
     <img class="preview-image" src="image/{{ image_id }}" />
     </a>

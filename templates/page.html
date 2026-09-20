@@ -9,9 +9,11 @@
     <div class="main-grid">
       <div class="main">
         {% if session.page == "/front_page" %}
-        {% include 'front_page.html' %}
+          {% include 'front_page.html' %}
         {% elif session.page == "/new_post" %}
-        {% include 'new_post.html' %}
+          {% include 'new_post.html' %}
+        {% elif session.page.startswith("/post") %}
+          {% include 'post_page.html' %}
         {% else %}
         <p>error</p>
         {% endif %}

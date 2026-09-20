@@ -31,8 +31,6 @@ def front_page():
     '''
   query = db.query(sql, [])
   posts = multi_list(query, list(range(0,4)))
-  if "posts" in session:
-    del session["posts"]
   return render_template("page.html", posts=posts)
 
 
@@ -47,7 +45,14 @@ def get_image(post_id):
 @app.route("/post/<int:post_id>")
 def post_page(post_id):
   session["page"] = "/post/" + str(post_id)
-  return render_template("page.html")
+  sql = '''
+      SELECT B.username, A.id, A.title, A.post_date
+      FROM Posts A
+      LEFT JOIN Users B ON B.id = A.poster
+      WHERE A.id = ?
+    '''
+  post = db.query(sql, [post_id])[0]
+  return render_template("page.html", post = post)
 
 @app.route("/new_post")
 def new_post():
@@ -72,9 +77,6 @@ def create_post():
     return "VIRHE: väärä tiedostomuoto"
 
   image = file.read()
-  
-  if len(image) > 100 * 1024:
-    return "VIRHE: liian suuri kuva"
 
   user_id = session["user_id"]
   post_date = datetime.datetime.now()
@@ -83,6 +85,15 @@ def create_post():
   db.execute(sql, [title, user_id, post_date, image])
 
   return go_back()
+
+@app.route("/delete_post", methods = ["POST"])
+def delete_post():
+  post_id = request.form["post_id"] 
+  sql = "DELETE FROM Posts WHERE id = ?"
+  db.execute(sql, [post_id])
+  # TODO kommentit ja avainsanat poistettava myös, jahka totetutetaan.
+  return redirect("/front_page")
+
 
 def go_back(): 
   if "previous_page" in session: 

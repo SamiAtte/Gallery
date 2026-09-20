@@ -1,0 +1,21 @@
+
+<div class="post-view"><ul>
+  <li>
+    <h2 class="image-preview-name"> {{ post[2] }} </h2>
+  </li>
+  <li>
+    <img src="/image/{{ post[1] }}" />
+  </li>
+  <li>
+    <h4 class="image-preview-poster"> {{ post[0] }} </h4>
+    {% if session.username == post[0] %}
+      <form action="/delete_post" method="post"> 
+        <input type="hidden" name="post_id" value="{{ post[1] }}">
+        <input class="form-button" type="submit" value="Delete"/>
+      </form> 
+    {% endif %}
+  </li>
+</ul></div>
+
+
+

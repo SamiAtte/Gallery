@@ -6,24 +6,6 @@ from utils import * #redirection
 
 from init import app
 
-#def get_username():
-# username = request.form["username"]
-# if not username:
-#   session["empty_username"] = True
-#   if "sign_in_attempt" in session:
-#     del session["sign_in_attempt"]
-# elif "empty_username" in session:
-#   del session["empty_username"]
-# return username
-
-#def get_password():
-# password = request.form["password"]
-# if not password:
-#   session["empty_password"] = True
-# elif "empty_password" in session:
-#   del session["empty_password"]
-# return password
-
 
 @app.route("/log_in", methods=["POST"])
 def log_in():
